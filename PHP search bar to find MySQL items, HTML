@@ -1,0 +1,52 @@
+<?php
+	include_once 'php/index.php';
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Searching Data </title>
+<style>
+input{
+	width: 40%;
+	height: 5%;
+	border: 1px;
+	border-radius: 05px;
+	padding: 8px 15px 8px 15px;
+	margin: 10px 0px 15px 0px;
+	box-shadow: 1px 1px 2px 1px grey;
+}
+</style>
+</head>
+
+<body>
+<h1>TESTING STUFF</h1>
+	<center>
+		<form action="" method="POST">
+			<input type="text" name="id" placeholder="Enter name here"> <br/>
+			<input type="submit" name="search" value="Search Data">
+		</form>
+<?php
+	$db = mysqli_select_db($conn, 'search_bar');
+	if(isset($_POST['search']))
+	{
+		$id = $_POST['id'];
+		$query = "SELECT * FROM products where title='$id' ";
+		$query_run = mysqli_query($conn, $query);
+		
+		while($row = mysqli_fetch_array($query_run))
+		{
+			?>
+				<form action='' method='POST'>
+					<input type="hidden" name="id" value="<?php echo $row['id'] ?>" />
+					<input type="text" name="title" value="<?php echo $row['title'] ?>" />
+					<input type="text" name="description" value="<?php echo $row['description'] ?>" />
+				</form>
+			<?php
+		}
+	}
+	
+?>
+	</center>
+</body>
+</html>
